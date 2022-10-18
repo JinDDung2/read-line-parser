@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import static com.line.connection.ConnectionConst.*;
 
 
-public class DBConnectionUtil {
+public class MySQLConnection {
 
-    public DBConnectionUtil () {
+    public MySQLConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
