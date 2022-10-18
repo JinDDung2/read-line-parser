@@ -17,7 +17,7 @@ public class DBConnection {
         }
     }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         try {
             Connection conn = DriverManager.getConnection(dbHost, dbUser, dbPassword);
             return conn;
