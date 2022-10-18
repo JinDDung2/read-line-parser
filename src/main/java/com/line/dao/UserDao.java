@@ -1,4 +1,4 @@
-package com.line;
+package com.line.dao;
 
 import com.line.connection.DBConnectionUtil;
 import com.line.domain.User;
