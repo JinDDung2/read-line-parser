@@ -14,10 +14,10 @@ class UserDaoTest {
     @Test
     void addAndSelect() {
         UserDaoAbstract userDao = new AWSUserDaoImpl();
-        User user = new User("9", "nine", "1234");
+        User user = new User("10", "ten", "1234");
         userDao.add(user);
 
-        User findUser = userDao.findById("9");
-        Assertions.assertEquals("nine", findUser.getName());
+        User findUser = userDao.findById("10");
+        Assertions.assertEquals("ten", findUser.getName());
     }
 }

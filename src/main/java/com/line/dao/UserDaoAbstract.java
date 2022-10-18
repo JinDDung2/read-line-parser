@@ -19,7 +19,7 @@ public abstract class UserDaoAbstract {
 
         String sql = "INSERT INTO users(id, name, password) values (?, ?, ?)";
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = makeConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getId());
             ps.setString(2, user.getName());
@@ -43,7 +43,7 @@ public abstract class UserDaoAbstract {
         String sql = "select * from users where users.id=?";
 
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = makeConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             rs = ps.executeQuery();
