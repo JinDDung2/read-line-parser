@@ -1,13 +1,13 @@
 package com.line.dao;
 
-import com.line.connection.DBConnectionUtil;
+import com.line.connection.MySQLConnection;
 
 import java.sql.Connection;
 
 public class AWSUserDaoImpl extends UserDaoAbstract{
     @Override
     public Connection makeConnection() {
-        Connection conn = DBConnectionUtil.getConnection();
+        Connection conn = MySQLConnection.getConnection();
         return conn;
     }
 }
