@@ -1,5 +1,6 @@
 package com.line.dao;
 
+import com.line.connection.DBConnection;
 import com.line.domain.User;
 
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public abstract class UserDaoAbstract {
 
         String sql = "INSERT INTO users(id, name, password) values (?, ?, ?)";
         try {
-            conn = makeConnection();
+            conn = DBConnection.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getId());
             ps.setString(2, user.getName());
@@ -42,7 +43,7 @@ public abstract class UserDaoAbstract {
         String sql = "select * from users where users.id=?";
 
         try {
-            conn = makeConnection();
+            conn = DBConnection.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             rs = ps.executeQuery();
@@ -72,8 +73,5 @@ public abstract class UserDaoAbstract {
             }
         }
     }
-
-
-
 
 }
