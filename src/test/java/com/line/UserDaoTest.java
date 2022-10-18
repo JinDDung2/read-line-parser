@@ -12,7 +12,7 @@ class UserDaoTest {
 
     @Test
     void addAndSelect() {
-        AWSUserDaoImpl userDao = new AWSUserDaoImpl();
+        UserDao userDao = new UserDao();
         User user = new User("10", "ten", "1234");
 //        userDao.add(user);
 
