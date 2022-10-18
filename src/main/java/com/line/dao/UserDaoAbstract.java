@@ -1,6 +1,5 @@
 package com.line.dao;
 
-import com.line.connection.DBConnectionUtil;
 import com.line.domain.User;
 
 import java.sql.Connection;
