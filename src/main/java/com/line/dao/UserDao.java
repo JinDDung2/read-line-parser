@@ -10,6 +10,17 @@ import java.sql.SQLException;
 
 public class UserDao {
 
+//    DBConnection connection = new DBConnection();
+    private ConnectionMaker connectionMaker;
+
+    public UserDao() {
+        this.connectionMaker = new AWSConnectionMaker();
+    }
+
+    public UserDao(AWSConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }
+
     public void add(User user) {
 
         Connection conn = null;
@@ -17,7 +28,7 @@ public class UserDao {
 
         String sql = "INSERT INTO users(id, name, password) values (?, ?, ?)";
         try {
-            conn = DBConnection.getConnection();
+            conn = connectionMaker.makeConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getId());
             ps.setString(2, user.getName());
@@ -41,7 +52,7 @@ public class UserDao {
         String sql = "select * from users where users.id=?";
 
         try {
-            conn = DBConnection.getConnection();
+            conn = connectionMaker.makeConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             rs = ps.executeQuery();
