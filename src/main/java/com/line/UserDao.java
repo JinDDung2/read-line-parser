@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-    public void add() throws SQLException {
+    public void add(User user) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -19,9 +19,9 @@ public class UserDao {
         try {
             conn = DBConnectionUtil.getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setString(1, "1");
-            ps.setString(2, "JinHyuck");
-            ps.setString(3, "0000");
+            ps.setString(1, user.getId());
+            ps.setString(2, user.getName());
+            ps.setString(3, user.getPassword());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -32,7 +32,7 @@ public class UserDao {
     }
 
 
-    public User findById(String id) throws SQLException {
+    public User findById(String id) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -76,7 +76,8 @@ public class UserDao {
     public static void main(String[] args) throws SQLException {
         UserDao userDao = new UserDao();
 //        userDao.add();
-        User user1 = userDao.findById("1");
+        userDao.add(new User("7", "Ruru", "1234"));
+        User user1 = userDao.findById("7");
         System.out.println(user1.getName());
     }
 
