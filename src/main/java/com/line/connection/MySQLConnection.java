@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import static com.line.connection.ConnectionConst.*;
 
 
-public class MySQLConnection {
+public class MySQLConnection implements DBConnection{
 
     public MySQLConnection() {
         try {
@@ -17,7 +17,8 @@ public class MySQLConnection {
         }
     }
 
-    public static Connection getConnection() {
+    @Override
+    public Connection getConnection() {
         try {
             Connection conn = DriverManager.getConnection(dbHost, dbUser, dbPassword);
             return conn;
