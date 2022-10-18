@@ -1,6 +1,6 @@
 package com.line.dao;
 
-import com.line.connection.DBConnectionUtil;
+import com.line.connection.MySQLConnection;
 import com.line.domain.User;
 
 import java.sql.Connection;
@@ -17,7 +17,7 @@ public class UserDao {
 
         String sql = "INSERT INTO users(id, name, password) values (?, ?, ?)";
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = MySQLConnection.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getId());
             ps.setString(2, user.getName());
@@ -41,7 +41,7 @@ public class UserDao {
         String sql = "select * from users where users.id=?";
 
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = MySQLConnection.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             rs = ps.executeQuery();
