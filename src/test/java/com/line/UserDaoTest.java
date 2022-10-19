@@ -13,10 +13,10 @@ class UserDaoTest {
     @Test
     void addAndSelect() {
         UserDao userDao = new UserDao();
-        User user = new User("10", "ten", "1234");
-//        userDao.add(user);
+        User user = new User("11", "IVE", "1234");
+        userDao.add(user);
 
-        User findUser = userDao.findById("10");
-        Assertions.assertEquals("ten", findUser.getName());
+        User findUser = userDao.findById("11");
+        Assertions.assertEquals("IVE", findUser.getName());
     }
 }
