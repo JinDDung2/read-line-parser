@@ -1,11 +1,9 @@
-package com.line.parser;
+package com.likelion.parser;
 
-import com.line.domain.Hospital;
+import com.likelion.domain.Hospital;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class HospitalParserTest {
     // annotation

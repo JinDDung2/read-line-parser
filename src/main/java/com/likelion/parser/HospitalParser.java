@@ -1,6 +1,6 @@
-package com.line.parser;
+package com.likelion.parser;
 
-import com.line.domain.Hospital;
+import com.likelion.domain.Hospital;
 
 // alt + enter
 public class HospitalParser implements Parser<Hospital>{
