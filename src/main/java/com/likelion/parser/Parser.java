@@ -1,4 +1,4 @@
-package com.line.parser;
+package com.likelion.parser;
 
 public interface Parser<T> {
     T parse(String str);
