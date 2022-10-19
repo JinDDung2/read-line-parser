@@ -1,4 +1,4 @@
-package com.line.connection;
+package com.likelion.connection;
 
 import java.util.Map;
 

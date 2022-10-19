@@ -1,10 +1,10 @@
-package com.line.connection;
+package com.likelion.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import static com.line.connection.ConnectionConst.*;
+import static com.likelion.connection.ConnectionConst.*;
 
 
 public class DBConnection {
