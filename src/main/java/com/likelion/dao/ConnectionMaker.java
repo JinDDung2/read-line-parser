@@ -1,4 +1,4 @@
-package com.line.dao;
+package com.likelion.dao;
 
 import java.sql.Connection;
 
