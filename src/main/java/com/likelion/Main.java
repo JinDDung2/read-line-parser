@@ -1,7 +1,7 @@
-package com.line;
+package com.likelion;
 
-import com.line.domain.Hospital;
-import com.line.parser.HospitalParser;
+import com.likelion.domain.Hospital;
+import com.likelion.parser.HospitalParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
