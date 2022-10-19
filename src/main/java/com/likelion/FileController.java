@@ -1,6 +1,6 @@
-package com.line;
+package com.likelion;
 
-import com.line.parser.Parser;
+import com.likelion.parser.Parser;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

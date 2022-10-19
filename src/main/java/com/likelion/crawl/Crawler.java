@@ -1,7 +1,6 @@
-package com.line.crawl;
+package com.likelion.crawl;
 
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 
 public class Crawler {
     public static void main(String[] args) {
