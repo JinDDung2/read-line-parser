@@ -10,7 +10,6 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-//    DBConnection connection = new DBConnection();
     private ConnectionMaker connectionMaker;
 
     public UserDao() {
@@ -35,7 +34,7 @@ public class UserDao {
             ps.setString(3, user.getPassword());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         } finally {
             close(conn, ps);
         }
@@ -65,11 +64,10 @@ public class UserDao {
                 throw new RuntimeException();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         } finally {
             close(conn, ps, rs);
         }
-        return null;
     }
 
     // 가변인자로 받아서, 파라미터를 여러개 받는다.
