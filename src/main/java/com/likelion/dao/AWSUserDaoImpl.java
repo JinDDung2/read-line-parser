@@ -1,12 +1,10 @@
-package com.line.dao;
-
-import com.line.connection.DBConnection;
+package com.likelion.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import static com.line.connection.ConnectionConst.*;
+import static com.likelion.connection.ConnectionConst.*;
 
 public class AWSUserDaoImpl extends UserDaoAbstract{
     @Override
