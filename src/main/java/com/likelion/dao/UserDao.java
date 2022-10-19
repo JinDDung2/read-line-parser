@@ -1,7 +1,6 @@
-package com.line.dao;
+package com.likelion.dao;
 
-import com.line.connection.DBConnection;
-import com.line.domain.User;
+import com.likelion.domain.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

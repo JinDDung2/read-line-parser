@@ -1,4 +1,4 @@
-package com.line.dao;
+package com.likelion.dao;
 
 
 public class UserDaoFactory {

@@ -1,9 +1,8 @@
-package com.line;
+package com.likelion;
 
-import com.line.dao.AWSUserDaoImpl;
-import com.line.dao.UserDao;
-import com.line.dao.UserDaoFactory;
-import com.line.domain.User;
+import com.likelion.dao.UserDao;
+import com.likelion.dao.UserDaoFactory;
+import com.likelion.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
