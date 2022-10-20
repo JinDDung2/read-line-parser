@@ -2,6 +2,7 @@ package com.likelion.dao;
 
 import com.likelion.domain.User;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,32 +17,37 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = UserDaoFactory.class)
 class UserDaoTest {
+    UserDao userDao;
 
     @Autowired
     ApplicationContext context;
 
+    @BeforeEach
+    void setUp() throws SQLException {
+        this.userDao = context.getBean("awsUserDao", UserDao.class);
+        userDao.deleteAll();
+        userDao.add(new User("100", "homidle", "1234"));
+        assertEquals(1, userDao.getCount());
+    }
+
     @Test
     void addAndSelect() {
-        UserDao userDao = context.getBean("awsUserDao", UserDao.class);
-        userDao.deleteAll();
-        User user = new User("13", "twelve", "1234");
+        User user = new User("11", "IVE", "1234");
         userDao.add(user);
 
-        User findUser = userDao.findById("13");
-        assertEquals("twelve", findUser.getName());
+        User findUser = userDao.findById("11");
+        assertEquals("IVE", findUser.getName());
 
     }
 
     @Test
     void countAndDelete() throws SQLException {
-        UserDao userDao = context.getBean("awsUserDao", UserDao.class);
         userDao.deleteAll();
         assertEquals(0, userDao.getCount());
     }
 
     @Test
     void count() throws SQLException {
-        UserDao userDao = context.getBean("awsUserDao", UserDao.class);
         userDao.deleteAll();
         assertEquals(0, userDao.getCount());
 
@@ -57,6 +63,13 @@ class UserDaoTest {
         userDao.add(user3);
         assertEquals(3, userDao.getCount());
 
+    }
+
+    @Test
+    void findByIdEmpty() {
+        assertThrows(RuntimeException.class, () -> {
+            userDao.findById("1000");
+        });
 
     }
 }
