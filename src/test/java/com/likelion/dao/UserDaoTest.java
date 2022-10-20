@@ -23,7 +23,7 @@ class UserDaoTest {
     ApplicationContext context;
 
     @BeforeEach
-    void setUp() throws SQLException {
+    void setUp() {
         this.userDao = context.getBean("awsUserDao", UserDao.class);
         userDao.deleteAll();
         userDao.add(new User("100", "homidle", "1234"));
@@ -41,13 +41,13 @@ class UserDaoTest {
     }
 
     @Test
-    void countAndDelete() throws SQLException {
+    void countAndDelete() {
         userDao.deleteAll();
         assertEquals(0, userDao.getCount());
     }
 
     @Test
-    void count() throws SQLException {
+    void count() {
         userDao.deleteAll();
         assertEquals(0, userDao.getCount());
 
