@@ -11,6 +11,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.sql.SQLException;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = UserDaoFactory.class)
 class UserDaoTest {
@@ -21,19 +23,40 @@ class UserDaoTest {
     @Test
     void addAndSelect() {
         UserDao userDao = context.getBean("awsUserDao", UserDao.class);
+        userDao.deleteAll();
         User user = new User("13", "twelve", "1234");
-//        userDao.add(user);
+        userDao.add(user);
 
         User findUser = userDao.findById("13");
-        Assertions.assertEquals("twelve", findUser.getName());
+        assertEquals("twelve", findUser.getName());
 
     }
 
     @Test
     void countAndDelete() throws SQLException {
         UserDao userDao = context.getBean("awsUserDao", UserDao.class);
-//        Assertions.assertEquals(10, userDao.getCount());
         userDao.deleteAll();
-        Assertions.assertEquals(0, userDao.getCount());
+        assertEquals(0, userDao.getCount());
+    }
+
+    @Test
+    void count() throws SQLException {
+        UserDao userDao = context.getBean("awsUserDao", UserDao.class);
+        userDao.deleteAll();
+        assertEquals(0, userDao.getCount());
+
+        User user1 = new User("1", "Chin", "20");
+        User user2 = new User("2", "Ck", "21");
+        User user3 = new User("3", "Louie", "22");
+        userDao.add(user1);
+        assertEquals(1, userDao.getCount());
+
+        userDao.add(user2);
+        assertEquals(2, userDao.getCount());
+
+        userDao.add(user3);
+        assertEquals(3, userDao.getCount());
+
+
     }
 }
