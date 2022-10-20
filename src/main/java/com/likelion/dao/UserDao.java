@@ -20,11 +20,10 @@ public class UserDao {
     }
 
     public void add(User user) {
-
+        String sql = "INSERT INTO users(id, name, password) values (?, ?, ?)";
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String sql = "INSERT INTO users(id, name, password) values (?, ?, ?)";
         try {
             conn = connectionMaker.makeConnection();
             ps = conn.prepareStatement(sql);
@@ -41,12 +40,10 @@ public class UserDao {
     }
 
     public User findById(String id) {
-
+        String sql = "select * from users where users.id=?";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
-        String sql = "select * from users where users.id=?";
 
         try {
             conn = connectionMaker.makeConnection();
@@ -69,9 +66,9 @@ public class UserDao {
     }
 
     public void deleteAll() {
+        String sql = "delete from users";
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "delete from users";
 
         try {
             conn = connectionMaker.makeConnection();
@@ -84,27 +81,35 @@ public class UserDao {
         }
     }
 
-    public int getCount() throws SQLException {
+    public int getCount(){
         String sql = "SELECT count(*) FROM users";
-        Connection conn = connectionMaker.makeConnection();
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        rs.next();
-        int count = rs.getInt(1);
-
-        close(conn, ps, rs);
-        return count;
-
+        try {
+            conn = connectionMaker.makeConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        } finally {
+            close(conn, ps, rs);
+        }
     }
 
     // 가변인자로 받아서, 파라미터를 여러개 받는다.
     private void close(AutoCloseable... autoCloseable) {
         for (AutoCloseable ac : autoCloseable) {
-            try {
-                ac.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            if (ac != null) {
+                try {
+                    ac.close();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
