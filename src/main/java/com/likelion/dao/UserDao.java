@@ -84,6 +84,20 @@ public class UserDao {
         }
     }
 
+    public int getCount() throws SQLException {
+        String sql = "SELECT count(*) FROM users";
+        Connection conn = connectionMaker.makeConnection();
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        rs.next();
+        int count = rs.getInt(1);
+
+        close(conn, ps, rs);
+        return count;
+
+    }
+
     // 가변인자로 받아서, 파라미터를 여러개 받는다.
     private void close(AutoCloseable... autoCloseable) {
         for (AutoCloseable ac : autoCloseable) {
