@@ -9,6 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.sql.SQLException;
+
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = UserDaoFactory.class)
 class UserDaoTest {
@@ -20,10 +22,18 @@ class UserDaoTest {
     void addAndSelect() {
         UserDao userDao = context.getBean("awsUserDao", UserDao.class);
         User user = new User("13", "twelve", "1234");
-        userDao.add(user);
+//        userDao.add(user);
 
         User findUser = userDao.findById("13");
         Assertions.assertEquals("twelve", findUser.getName());
 
+    }
+
+    @Test
+    void countAndDelete() throws SQLException {
+        UserDao userDao = context.getBean("awsUserDao", UserDao.class);
+//        Assertions.assertEquals(10, userDao.getCount());
+        userDao.deleteAll();
+        Assertions.assertEquals(0, userDao.getCount());
     }
 }
