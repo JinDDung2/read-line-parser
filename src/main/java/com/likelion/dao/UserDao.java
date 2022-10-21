@@ -20,8 +20,19 @@ public class UserDao {
     }
 
     public void save(User user) {
-        StatementStrategy st = new SaveStatement(user);
-        jdbcContextWithStatementStrategy(st);
+        jdbcContextWithStatementStrategy(
+                new StatementStrategy() {
+                    @Override
+                    public PreparedStatement makePreparedStatement(Connection conn) throws SQLException {
+                        String sql = "INSERT INTO users(id, name, password) values(?, ?, ?)";
+                        PreparedStatement ps = conn.prepareStatement(sql);
+                        ps.setString(1, user.getId());
+                        ps.setString(2, user.getName());
+                        ps.setString(3, user.getPassword());
+                        return ps;
+                    }
+                }
+        );
     }
 
     public User findById(String id) {
@@ -51,8 +62,14 @@ public class UserDao {
     }
 
     public void deleteAll() {
-        StatementStrategy st = new DeleteAllStatement();
-        jdbcContextWithStatementStrategy(st);
+        jdbcContextWithStatementStrategy(new StatementStrategy() {
+            @Override
+            public PreparedStatement makePreparedStatement(Connection conn) throws SQLException {
+                String sql = "DELETE FROM users";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                return ps;
+            }
+        });
     }
 
     public int getCount(){
