@@ -20,23 +20,8 @@ public class UserDao {
     }
 
     public void add(User user) {
-        String sql = "INSERT INTO users(id, name, password) values (?, ?, ?)";
-        Connection conn = null;
-        PreparedStatement ps = null;
-
-        try {
-            conn = connectionMaker.makeConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, user.getId());
-            ps.setString(2, user.getName());
-            ps.setString(3, user.getPassword());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException();
-        } finally {
-            close(conn, ps);
-        }
-
+        StatementStrategy st = new SaveStatement(user);
+        jdbcContextWithStatementStrategy(st);
     }
 
     public User findById(String id) {
@@ -66,19 +51,8 @@ public class UserDao {
     }
 
     public void deleteAll() {
-        String sql = "delete from users";
-        Connection conn = null;
-        PreparedStatement ps = null;
-
-        try {
-            conn = connectionMaker.makeConnection();
-            ps = conn.prepareStatement(sql);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(conn, ps);
-        }
+        StatementStrategy st = new DeleteAllStatement();
+        jdbcContextWithStatementStrategy(st);
     }
 
     public int getCount(){
@@ -98,6 +72,22 @@ public class UserDao {
             throw new RuntimeException();
         } finally {
             close(conn, ps, rs);
+        }
+    }
+
+    public void jdbcContextWithStatementStrategy(StatementStrategy stmt) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = connectionMaker.makeConnection();
+            ps = stmt.makePreparedStatement(conn);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        } finally {
+            close(conn, ps);
         }
     }
 
