@@ -19,7 +19,7 @@ public class UserDao {
         this.connectionMaker = connectionMaker;
     }
 
-    public void add(User user) {
+    public void save(User user) {
         StatementStrategy st = new SaveStatement(user);
         jdbcContextWithStatementStrategy(st);
     }
