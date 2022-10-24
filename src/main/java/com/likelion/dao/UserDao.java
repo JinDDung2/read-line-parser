@@ -2,6 +2,7 @@ package com.likelion.dao;
 
 import com.likelion.domain.User;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,14 +10,10 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-    private ConnectionMaker connectionMaker;
+    private final DataSource dataSource;
 
-    public UserDao() {
-        this.connectionMaker = new AWSConnectionMaker();
-    }
-
-    public UserDao(ConnectionMaker connectionMaker) {
-        this.connectionMaker = connectionMaker;
+    public UserDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public void save(User user) {
@@ -42,7 +39,7 @@ public class UserDao {
         ResultSet rs = null;
 
         try {
-            conn = connectionMaker.makeConnection();
+            conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             rs = ps.executeQuery();
@@ -79,7 +76,7 @@ public class UserDao {
         ResultSet rs = null;
 
         try {
-            conn = connectionMaker.makeConnection();
+            conn = dataSource.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             rs.next();
@@ -97,7 +94,7 @@ public class UserDao {
         PreparedStatement ps = null;
 
         try {
-            conn = connectionMaker.makeConnection();
+            conn = dataSource.getConnection();
             ps = stmt.makePreparedStatement(conn);
             ps.executeUpdate();
         } catch (SQLException e) {
