@@ -1,5 +1,7 @@
 package com.likelion.dao;
 
+import com.likelion.domain.User;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +29,15 @@ public class JdbcContext {
         } finally {
             close(conn, ps);
         }
+    }
+
+    public void executeSql(final String query) {
+        workWithStatementStrategy(new StatementStrategy() {
+            @Override
+            public PreparedStatement makePreparedStatement(Connection conn) throws SQLException {
+                return conn.prepareStatement(query);
+            }
+        });
     }
 
     private void close(AutoCloseable... autoCloseable) {
