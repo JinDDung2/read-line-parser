@@ -11,13 +11,15 @@ import java.sql.SQLException;
 public class UserDao {
 
     private final DataSource dataSource;
+    private final JdbcContext jdbcContext;
 
     public UserDao(DataSource dataSource) {
         this.dataSource = dataSource;
+        this.jdbcContext = new JdbcContext(dataSource);
     }
 
     public void save(User user) {
-        jdbcContextWithStatementStrategy(
+        jdbcContext.workWithStatementStrategy(
                 new StatementStrategy() {
                     @Override
                     public PreparedStatement makePreparedStatement(Connection conn) throws SQLException {
@@ -59,7 +61,7 @@ public class UserDao {
     }
 
     public void deleteAll() {
-        jdbcContextWithStatementStrategy(new StatementStrategy() {
+        jdbcContext.workWithStatementStrategy(new StatementStrategy() {
             @Override
             public PreparedStatement makePreparedStatement(Connection conn) throws SQLException {
                 String sql = "DELETE FROM users";
@@ -86,22 +88,6 @@ public class UserDao {
             throw new RuntimeException();
         } finally {
             close(conn, ps, rs);
-        }
-    }
-
-    public void jdbcContextWithStatementStrategy(StatementStrategy stmt) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-
-        try {
-            conn = dataSource.getConnection();
-            ps = stmt.makePreparedStatement(conn);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        } finally {
-            close(conn, ps);
         }
     }
 
