@@ -9,6 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -67,6 +69,20 @@ class UserDaoTest {
         assertThrows(RuntimeException.class, () -> {
             userDao.findById("1000");
         });
+
+    }
+
+    @Test
+    void getAll() {
+        User user1 = new User("1", "Chin", "20");
+        User user2 = new User("2", "Ck", "21");
+        User user3 = new User("3", "Louie", "22");
+        userDao.save(user1);
+        userDao.save(user2);
+        userDao.save(user3);
+
+        List<User> users = userDao.getAll();
+        assertEquals(4, users.size());
 
     }
 }

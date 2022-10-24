@@ -2,6 +2,7 @@ package com.likelion.dao;
 
 import com.likelion.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserDao {
 
@@ -16,6 +18,14 @@ public class UserDao {
 
     public UserDao(DataSource dataSource) {
         this.template = new JdbcTemplate(dataSource);
+    }
+
+    private RowMapper<User> userRowMapper() {
+        return ((rs, rowNum) -> {
+            User user = new User(rs.getString("id"),
+                    rs.getString("name"), rs.getString("password"));
+            return user;
+        });
     }
 
     public void save(User user) {
@@ -28,12 +38,9 @@ public class UserDao {
         return template.queryForObject(sql, userRowMapper(), id);
     }
 
-    private RowMapper<User> userRowMapper() {
-        return ((rs, rowNum) -> {
-            User user = new User(rs.getString("id"),
-                    rs.getString("name"), rs.getString("password"));
-            return user;
-        });
+    public List<User> getAll() {
+        String sql = "SELECT * from users ORDER BY id";
+        return template.query(sql, userRowMapper());
     }
 
     public void deleteAll() {
